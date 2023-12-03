@@ -15,12 +15,12 @@ pub async fn new(rb: &rbatis::RBatis) -> Result<()> {
                 CREATE TABLE IF NOT EXISTS {TABLE_NAME} (
                     id bigserial PRIMARY KEY,
                     ptype varchar(12) NOT NULL,
-                    v0 varchar(128) NOT NULL,
-                    v1 varchar(128) NOT NULL,
-                    v2 varchar(128) NOT NULL,
-                    v3 varchar(128) NOT NULL,
-                    v4 varchar(128) NOT NULL,
-                    v5 varchar(128) NOT NULL,
+                    v0 varchar(128),
+                    v1 varchar(128),
+                    v2 varchar(128),
+                    v3 varchar(128),
+                    v4 varchar(128),
+                    v5 varchar(128),
                     CONSTRAINT unique_key_casbin_rbatis_adapter UNIQUE(ptype, v0, v1, v2, v3, v4, v5)
                 );
                 CREATE INDEX IF NOT EXISTS {TABLE_NAME}_ptype_idx ON {TABLE_NAME} (ptype);

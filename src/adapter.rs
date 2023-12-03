@@ -36,7 +36,7 @@ impl CasbinRbatisAdapter {
 
 #[async_trait]
 impl Adapter for CasbinRbatisAdapter {
-    async fn load_policy(&self, m: &mut dyn Model) -> Result<()> {
+    async fn load_policy(&mut self, m: &mut dyn Model) -> Result<()> {
         let mut rb = self.rbatis.clone();
 
         // #[cfg(feature = "runtime-tokio")]
@@ -284,7 +284,7 @@ pub(crate) fn load_filtered_policy_line(casbin_rule: &CasbinRule, f: &Filter) ->
 }
 
 fn normalize_policy(casbin_rule: &CasbinRule) -> Option<Vec<String>> {
-    let mut result = vec![
+    let mut result = [
         casbin_rule.v0.clone(),
         casbin_rule.v1.clone(),
         casbin_rule.v2.clone(),
@@ -352,8 +352,6 @@ mod test {
             rb.init(MysqlDriver {}, url)
                 .map_err(|err| CasbinError::from(AdapterError(Box::new(err))))
                 .unwrap();
-            let pool = rb.get_pool().map_err(|err| CasbinError::from(AdapterError(Box::new(err)))).unwrap();
-            pool.resize(3);
 
             let mut cra = CasbinRbatisAdapter::new(rb, true).await.unwrap();
             println!("casbin adapter is {cra:?}");

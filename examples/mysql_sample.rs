@@ -13,7 +13,6 @@ async fn main() -> Result<()> {
 
     // 创建rbatis 实例
     rb.init(MysqlDriver {}, mysql_url).unwrap();
-    rb.get_pool().unwrap().resize(10);
 
     let rb_casbin = CasbinRbatisAdapter::new(rb.clone(), true).await?;
     let mut e = Enforcer::new("examples/rbac_model.conf", rb_casbin).await?;
